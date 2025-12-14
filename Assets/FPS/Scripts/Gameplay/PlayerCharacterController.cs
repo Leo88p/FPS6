@@ -117,9 +117,8 @@ namespace Unity.FPS.Gameplay
             }
         }
 
-        private Quaternion m_InitialHeadRotation;
         private Quaternion m_InitialBodyRotation;
-        private bool m_HasCapturedInitialPose = false;
+        private Quaternion m_InitialHandRotation;
 
         Health m_Health;
         PlayerInputHandler m_InputHandler;
@@ -165,6 +164,8 @@ namespace Unity.FPS.Gameplay
             DebugUtility.HandleErrorIfNullGetComponent<Actor, PlayerCharacterController>(m_Actor, this, gameObject);
 
             m_Controller.enableOverlapRecovery = true;
+            m_InitialBodyRotation = transform.rotation;
+            m_InitialHandRotation = m_WeaponsManager.WeaponParentSocket.rotation;
 
             m_Health.OnDie += OnDie;
 
@@ -217,6 +218,8 @@ namespace Unity.FPS.Gameplay
             UpdateCharacterHeight(false);
 
             HandleCharacterMovement();
+
+            HandleHandRotation();
         }
 
         void OnDie()
@@ -269,22 +272,7 @@ namespace Unity.FPS.Gameplay
 
         void HandleCharacterMovement()
         {
-            if (!m_HasCapturedInitialPose)
-            {
-                // Get initial headset rotation
-                m_InitialHeadRotation = m_InputHandler.GetLookInput();
-
-                // Preserve your scene's initial body rotation
-                m_InitialBodyRotation = transform.rotation;
-
-                m_HasCapturedInitialPose = true;
-
-                // Apply initial rotation immediately
-                ApplyHeadsetRotation(m_InitialHeadRotation);
-                return;
-            }
-            Quaternion lookInput = m_InputHandler.GetLookInput();
-            ApplyHeadsetRotation(lookInput);
+            ApplyHeadsetRotation();
             //transform.localEulerAngles = new Vector3(0, lookInput.y, lookInput.z);
             //PlayerCamera.transform.localEulerAngles = new Vector3(lookInput.x, 0, 0);
 
@@ -387,34 +375,24 @@ namespace Unity.FPS.Gameplay
                 CharacterVelocity = Vector3.ProjectOnPlane(CharacterVelocity, hit.normal);
             }
         }
-        void ApplyHeadsetRotation(Quaternion currentHeadRotation)
+        void ApplyHeadsetRotation()
         {
-            // Calculate delta from initial headset pose
-            Quaternion deltaRotation = Quaternion.Inverse(m_InitialHeadRotation) * currentHeadRotation;
-
-            // --- BODY ROTATION (YAW ONLY) ---
-            Vector3 forward = deltaRotation * Vector3.forward;
-            forward.y = 0;  // Project to horizontal plane
-
-            if (forward.sqrMagnitude > 0.001f)
+            Quaternion lookInput = m_InputHandler.GetLookInput();
+            Quaternion newRotation = m_InitialBodyRotation * lookInput;
+            transform.rotation = Quaternion.Euler(0, newRotation.eulerAngles.y, newRotation.eulerAngles.z);
+            float pitchAngle = Mathf.Clamp(ConvertAngle(newRotation.eulerAngles.x), -70f, 70f);
+            PlayerCamera.transform.localRotation = Quaternion.Euler(pitchAngle, 0, 0);
+        }
+        float ConvertAngle(float angle)
+        {
+            if (angle <= 180)
             {
-                Quaternion targetBodyRot = Quaternion.LookRotation(forward, Vector3.up);
-                transform.rotation = m_InitialBodyRotation * targetBodyRot;
+                return angle;
             }
-
-            // --- CAMERA PITCH CALCULATION (FIXED) ---
-            // Get the headset's forward vector in world space
-            Vector3 headForward = currentHeadRotation * Vector3.forward;
-
-            // Calculate pitch angle relative to horizontal plane
-            float horizontalLength = new Vector2(headForward.x, headForward.z).magnitude;
-            float pitchAngle = Mathf.Atan2(headForward.y, horizontalLength) * Mathf.Rad2Deg;
-
-            // Apply clamping with natural limits
-            pitchAngle = Mathf.Clamp(pitchAngle, -70f, 70f);
-
-            // Apply ONLY pitch to camera (no roll or yaw)
-            PlayerCamera.transform.localRotation = Quaternion.Euler(pitchAngle, 0f, 0f);
+            else
+            {
+                return angle - 360;
+            }
         }
 
         // Returns true if the slope angle represented by the given normal is under the slope angle limit of the character controller
@@ -503,6 +481,13 @@ namespace Unity.FPS.Gameplay
 
             IsCrouching = crouched;
             return true;
+        }
+        public void HandleHandRotation()
+        {
+            m_WeaponsManager.GetActiveWeapon().transform.rotation = m_InitialHandRotation;
+            Quaternion handRotationInput = m_InputHandler.GetHandRotationInput();
+            Vector3 targetAngles = (m_InitialHandRotation * handRotationInput).eulerAngles;
+            m_WeaponsManager.GetActiveWeapon().transform.rotation = Quaternion.Euler(targetAngles);
         }
     }
 }

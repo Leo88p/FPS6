@@ -34,6 +34,7 @@ namespace Unity.FPS.Gameplay
         private InputAction m_CrouchAction;
         private InputAction m_ReloadAction;
         private InputAction m_NextWeaponAction;
+        private InputAction m_HandRotationAction;
 
         void Start()
         {
@@ -55,7 +56,8 @@ namespace Unity.FPS.Gameplay
             m_CrouchAction = InputSystem.actions.FindAction("Player/Crouch");
             m_ReloadAction = InputSystem.actions.FindAction("Player/Reload");
             m_NextWeaponAction = InputSystem.actions.FindAction("Player/NextWeapon");
-            
+            m_HandRotationAction = InputSystem.actions.FindAction("Player/HandRotation");
+
             m_MoveAction.Enable();
             m_LookAction.Enable();
             m_JumpAction.Enable();
@@ -65,6 +67,7 @@ namespace Unity.FPS.Gameplay
             m_CrouchAction.Enable();
             m_ReloadAction.Enable();
             m_NextWeaponAction.Enable();
+            m_HandRotationAction.Enable();
         }
 
         void LateUpdate()
@@ -92,12 +95,6 @@ namespace Unity.FPS.Gameplay
             }
 
             return Vector3.zero;
-        }
-        public Vector2 GetLookDelta()
-        {
-            if (!CanProcessInput()) return Vector2.zero;
-
-            return m_LookAction.ReadValue<Vector2>();
         }
 
         public Quaternion GetLookInput()
@@ -239,6 +236,14 @@ namespace Unity.FPS.Gameplay
             }
 
             return 0;
+        }
+
+        public Quaternion GetHandRotationInput()
+        {
+            if (!CanProcessInput())
+                return Quaternion.identity;
+            Quaternion input = m_HandRotationAction.ReadValue<Quaternion>();
+            return input;
         }
     }
 }
