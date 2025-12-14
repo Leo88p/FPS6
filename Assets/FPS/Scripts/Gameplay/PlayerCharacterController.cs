@@ -1,6 +1,7 @@
 ﻿using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
 namespace Unity.FPS.Gameplay
 {
@@ -124,6 +125,7 @@ namespace Unity.FPS.Gameplay
         PlayerInputHandler m_InputHandler;
         CharacterController m_Controller;
         PlayerWeaponsManager m_WeaponsManager;
+        XRInputModalityManager m_InputModalityManager;
         Actor m_Actor;
         Vector3 m_GroundNormal;
         Vector3 m_CharacterVelocity;
@@ -166,6 +168,7 @@ namespace Unity.FPS.Gameplay
             m_Controller.enableOverlapRecovery = true;
             m_InitialBodyRotation = transform.rotation;
             m_InitialHandRotation = m_WeaponsManager.WeaponParentSocket.rotation;
+            m_InputModalityManager = GetComponent<XRInputModalityManager>();
 
             m_Health.OnDie += OnDie;
 
@@ -484,10 +487,12 @@ namespace Unity.FPS.Gameplay
         }
         public void HandleHandRotation()
         {
-            m_WeaponsManager.GetActiveWeapon().transform.rotation = m_InitialHandRotation;
+            WeaponController weapon = m_WeaponsManager.GetActiveWeapon();
+            m_InputModalityManager.rightController = weapon.gameObject;
+            weapon.transform.rotation = m_InitialHandRotation;
             Quaternion handRotationInput = m_InputHandler.GetHandRotationInput();
             Vector3 targetAngles = (m_InitialHandRotation * handRotationInput).eulerAngles;
-            m_WeaponsManager.GetActiveWeapon().transform.rotation = Quaternion.Euler(targetAngles);
+            weapon.transform.rotation = Quaternion.Euler(targetAngles);
         }
     }
 }
