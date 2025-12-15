@@ -221,11 +221,14 @@ namespace Unity.FPS.Gameplay
 
             UpdateCharacterHeight(false);
 
-            HandleCharacterMovement();
+            //HandleCharacterMovement();
 
+            ApplyHeadsetRotation();
+        }
+        private void LateUpdate()
+        {
             HandleHandRotation();
         }
-
         void OnDie()
         {
             IsDead = true;
@@ -276,7 +279,6 @@ namespace Unity.FPS.Gameplay
 
         void HandleCharacterMovement()
         {
-            ApplyHeadsetRotation();
             //transform.localEulerAngles = new Vector3(0, lookInput.y, lookInput.z);
             //PlayerCamera.transform.localEulerAngles = new Vector3(lookInput.x, 0, 0);
 
