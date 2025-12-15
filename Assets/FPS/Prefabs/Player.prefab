@@ -75,14 +75,13 @@ GameObject:
   - component: {fileID: 971163140013744405}
   - component: {fileID: 2672899502922099808}
   - component: {fileID: 110154184396904855}
-  - component: {fileID: 3702219376719655126}
   m_Layer: 2
   m_Name: Grab Move
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &971163140013744405
 Transform:
   m_ObjectHideFlags: 0
@@ -105,7 +104,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 586863417308220743}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b94c4c83dec6a94fbaebf543478259e, type: 3}
   m_Name: 
@@ -113,10 +112,10 @@ MonoBehaviour:
   m_Mediator: {fileID: 7281193877526983994}
   m_TransformationPriority: 0
   m_EnableFreeXMovement: 1
-  m_EnableFreeYMovement: 0
+  m_EnableFreeYMovement: 1
   m_EnableFreeZMovement: 1
   m_GravityApplicationMode: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_ControllerTransform: {fileID: 0}
   m_EnableMoveWhileSelecting: 0
   m_MoveFactor: 1
@@ -179,13 +178,13 @@ MonoBehaviour:
   m_Mediator: {fileID: 7281193877526983994}
   m_TransformationPriority: 0
   m_EnableFreeXMovement: 1
-  m_EnableFreeYMovement: 0
+  m_EnableFreeYMovement: 1
   m_EnableFreeZMovement: 1
   m_GravityApplicationMode: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_ControllerTransform: {fileID: 0}
   m_EnableMoveWhileSelecting: 0
-  m_MoveFactor: 1
+  m_MoveFactor: 10
   m_GrabMoveInput:
     m_InputSourceMode: 2
     m_InputActionPerformed:
@@ -230,34 +229,6 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
---- !u!114 &3702219376719655126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 586863417308220743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 760ff70c1c91bdd45907d0ff0cdcaf7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Mediator: {fileID: 7281193877526983994}
-  m_TransformationPriority: 0
-  m_EnableFreeXMovement: 1
-  m_EnableFreeYMovement: 0
-  m_EnableFreeZMovement: 1
-  m_GravityApplicationMode: 0
-  m_UseGravity: 1
-  m_LeftGrabMoveProvider: {fileID: 2672899502922099808}
-  m_RightGrabMoveProvider: {fileID: 110154184396904855}
-  m_OverrideSharedSettingsOnInit: 1
-  m_MoveFactor: 1
-  m_RequireTwoHandsForTranslation: 0
-  m_EnableRotation: 1
-  m_EnableScaling: 0
-  m_MinimumScale: 0.2
-  m_MaximumScale: 5
 --- !u!1 &1081567745346063313
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,7 +737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5825493552294553646
 Transform:
   m_ObjectHideFlags: 0
@@ -800,7 +771,7 @@ MonoBehaviour:
   m_InAirControlModifier: 0.5
   m_EnableStrafe: 1
   m_EnableFly: 0
-  m_ForwardSource: {fileID: 8746678193447392789}
+  m_ForwardSource: {fileID: 0}
   m_LeftHandMoveInput:
     m_InputSourceMode: 2
     m_InputAction:

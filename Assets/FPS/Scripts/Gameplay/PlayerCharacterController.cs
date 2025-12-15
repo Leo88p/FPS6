@@ -126,13 +126,10 @@ namespace Unity.FPS.Gameplay
         PlayerInputHandler m_InputHandler;
         CharacterController m_Controller;
         PlayerWeaponsManager m_WeaponsManager;
-        XRInputModalityManager m_InputModalityManager;
         Actor m_Actor;
         Vector3 m_GroundNormal;
-        Vector3 m_CharacterVelocity;
         Vector3 m_LatestImpactSpeed;
         float m_LastTimeJumped = 0f;
-        float m_FootstepDistanceCounter;
         float m_TargetCharacterHeight;
 
         const float k_JumpGroundingPreventionTime = 0.2f;
@@ -169,7 +166,6 @@ namespace Unity.FPS.Gameplay
             m_Controller.enableOverlapRecovery = true;
             m_InitialBodyRotation = transform.rotation;
             m_InitialHandRotation = m_WeaponsManager.WeaponParentSocket.rotation;
-            m_InputModalityManager = GetComponent<XRInputModalityManager>();
 
             m_Health.OnDie += OnDie;
 
@@ -355,15 +351,6 @@ namespace Unity.FPS.Gameplay
 
             IsCrouching = crouched;
             return true;
-        }
-        public void HandleHandRotation()
-        {
-            WeaponController weapon = m_WeaponsManager.GetActiveWeapon();
-            m_InputModalityManager.rightController = weapon.gameObject;
-            weapon.transform.rotation = m_InitialHandRotation;
-            Quaternion handRotationInput = m_InputHandler.GetHandRotationInput();
-            Vector3 targetAngles = (m_InitialHandRotation * handRotationInput).eulerAngles;
-            weapon.transform.rotation = Quaternion.Euler(targetAngles);
         }
         public void OnControllerColliderHit(ControllerColliderHit hit)
         {
