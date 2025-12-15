@@ -16,10 +16,10 @@ namespace Unity.FPS.Game
             _grabInteractable = GetComponent<XRGrabInteractable>();
             setDooLockStatus(true);
         }
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            if (collision.rigidbody.gameObject.CompareTag("Key")) {
-                Destroy(collision.rigidbody.gameObject);
+            if (other.gameObject.CompareTag("Key")) {
+                Destroy(other.gameObject);
                 setDooLockStatus(false);
             }
         }
