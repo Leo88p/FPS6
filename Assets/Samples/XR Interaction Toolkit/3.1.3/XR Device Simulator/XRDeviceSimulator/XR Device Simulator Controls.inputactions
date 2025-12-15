@@ -369,7 +369,7 @@
                     "id": "66e536bc-b5b6-4c7b-903a-fbcc05fc854e",
                     "path": "<Mouse>/scroll",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "ScaleVector2(x=500,y=500)",
                     "groups": "",
                     "action": "Mouse Scroll",
                     "isComposite": false,
@@ -493,17 +493,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Toggle Secondary 2D Axis Target",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9404bec7-672a-4fb1-adb3-e2dc4e32801b",
-                    "path": "<Keyboard>/3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Toggle Device Position Target",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
