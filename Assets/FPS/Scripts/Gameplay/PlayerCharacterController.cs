@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 namespace Unity.FPS.Gameplay
 {
@@ -493,6 +494,13 @@ namespace Unity.FPS.Gameplay
             Quaternion handRotationInput = m_InputHandler.GetHandRotationInput();
             Vector3 targetAngles = (m_InitialHandRotation * handRotationInput).eulerAngles;
             weapon.transform.rotation = Quaternion.Euler(targetAngles);
+        }
+        public void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            if (hit.collider.gameObject.CompareTag("Door"))
+            {
+                hit.collider.attachedRigidbody.AddForce(2*hit.moveDirection);
+            }
         }
     }
 }
