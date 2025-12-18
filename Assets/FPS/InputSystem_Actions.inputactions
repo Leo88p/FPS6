@@ -347,7 +347,7 @@
                 {
                     "name": "",
                     "id": "24c8aca1-1a54-433e-a682-fdaa8d5a32ab",
-                    "path": "<XRController>/{GripButton}",
+                    "path": "<XRController>{RightHand}/{GripButton}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
