@@ -94,7 +94,6 @@ namespace Unity.FPS.Gameplay
         float m_TimeStartedWeaponSwitch;
         WeaponSwitchState m_WeaponSwitchState;
         int m_WeaponSwitchNewWeaponIndex;
-        private XRInputModalityManager m_InputModalityManager;
         private GrabMoveProvider[] m_GrabMoveProviders;
 
         void Start()
@@ -109,7 +108,6 @@ namespace Unity.FPS.Gameplay
             m_PlayerCharacterController = GetComponent<PlayerCharacterController>();
             DebugUtility.HandleErrorIfNullGetComponent<PlayerCharacterController, PlayerWeaponsManager>(
                 m_PlayerCharacterController, this, gameObject);
-            m_InputModalityManager = gameObject.GetComponent<XRInputModalityManager>();
             m_GrabMoveProviders = gameObject.GetComponentsInChildren<GrabMoveProvider>();
 
             SetFov(DefaultFov);
@@ -248,17 +246,6 @@ namespace Unity.FPS.Gameplay
             {
                 // Store data related to weapon switching animation
                 m_WeaponSwitchNewWeaponIndex = newWeaponIndex;
-                m_InputModalityManager.rightController = GetWeaponAtSlotIndex(m_WeaponSwitchNewWeaponIndex).gameObject;
-                if (m_InputModalityManager.rightController.GetComponent<ControllerWeapon>())
-                {
-                    m_GrabMoveProviders[0].controllerTransform = m_InputModalityManager.rightController.transform;
-                    m_GrabMoveProviders[1].controllerTransform = m_InputModalityManager.rightController.transform;
-                }
-                else
-                {
-                    m_GrabMoveProviders[0].controllerTransform = null;
-                    m_GrabMoveProviders[1].controllerTransform = null;
-                }
                 m_TimeStartedWeaponSwitch = Time.time;
 
                 // Handle case of switching to a valid weapon for the first time (simply put it up without putting anything down first)
