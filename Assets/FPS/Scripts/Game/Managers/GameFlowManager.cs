@@ -36,7 +36,10 @@ namespace Unity.FPS.Game
         public List<Transform> PlayerPosition;
         private int currentStage;
         public int CurrentStage { get { return currentStage; } 
-            set { currentStage = value; Player.gameObject.transform.position = PlayerPosition[value].position; } }
+            set { currentStage = value; 
+                Player.gameObject.transform.position = PlayerPosition[value].position;
+                Player.gameObject.transform.rotation = PlayerPosition[value].rotation;
+            } }
 
         public bool GameIsEnding { get; private set; }
 
