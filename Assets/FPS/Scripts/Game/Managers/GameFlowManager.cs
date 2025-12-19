@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Unity.XR.CoreUtils;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Unity.FPS.Game
@@ -27,16 +29,27 @@ namespace Unity.FPS.Game
         [Header("Lose")] [Tooltip("This string has to be the name of the scene you want to load when losing")]
         public string LoseSceneName = "LoseScene";
 
+        [Header("Player")]
+        [Tooltip("Player object on scene")]
+        public XROrigin Player;
+        [Tooltip("Initial positions of player on scene during different game stages")]
+        public List<Transform> PlayerPosition;
+        private int currentStage;
+        public int CurrentStage { get { return currentStage; } 
+            set { currentStage = value; Player.gameObject.transform.position = PlayerPosition[value].position; } }
 
         public bool GameIsEnding { get; private set; }
 
         float m_TimeLoadEndGameScene;
         string m_SceneToLoad;
+        public static float gameTime;
 
         void Awake()
         {
             EventManager.AddListener<AllObjectivesCompletedEvent>(OnAllObjectivesCompleted);
             EventManager.AddListener<PlayerDeathEvent>(OnPlayerDeath);
+            gameTime = 0;
+            CurrentStage = 0;
         }
 
         void Start()
@@ -60,6 +73,7 @@ namespace Unity.FPS.Game
                     GameIsEnding = false;
                 }
             }
+            gameTime += Time.deltaTime;
         }
 
         void OnAllObjectivesCompleted(AllObjectivesCompletedEvent evt) => EndGame(true);
