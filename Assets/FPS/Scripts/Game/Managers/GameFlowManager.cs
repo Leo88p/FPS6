@@ -7,13 +7,13 @@ namespace Unity.FPS.Game
 {
     public class GameFlowManager : MonoBehaviour
     {
-        [Header("Parameters")] [Tooltip("Duration of the fade-to-black at the end of the game")]
+        [Header("Parameters")][Tooltip("Duration of the fade-to-black at the end of the game")]
         public float EndSceneLoadDelay = 3f;
 
         [Tooltip("The canvas group of the fade-to-black screen")]
         public CanvasGroup EndGameFadeCanvasGroup;
 
-        [Header("Win")] [Tooltip("This string has to be the name of the scene you want to load when winning")]
+        [Header("Win")][Tooltip("This string has to be the name of the scene you want to load when winning")]
         public string WinSceneName = "WinScene";
 
         [Tooltip("Duration of delay before the fade-to-black, if winning")]
@@ -26,7 +26,7 @@ namespace Unity.FPS.Game
 
         [Tooltip("Sound played on win")] public AudioClip VictorySound;
 
-        [Header("Lose")] [Tooltip("This string has to be the name of the scene you want to load when losing")]
+        [Header("Lose")][Tooltip("This string has to be the name of the scene you want to load when losing")]
         public string LoseSceneName = "LoseScene";
 
         [Header("Player")]
@@ -34,12 +34,35 @@ namespace Unity.FPS.Game
         public XROrigin Player;
         [Tooltip("Initial positions of player on scene during different game stages")]
         public List<Transform> PlayerPosition;
+        [Tooltip("Grab move provider game object")]
+        public GameObject GrabMoveProvider;
+        [Tooltip("Move provider game object")]
+        public GameObject MoveProvider;
+        public GameObject ClimbProvider;
+        public Objective ObjectiveCollectCrystals;
         private int currentStage;
-        public int CurrentStage { get { return currentStage; } 
-            set { currentStage = value; 
+        public int CurrentStage {
+            get { return currentStage; }
+            set {
+                currentStage = value;
                 Player.gameObject.transform.position = PlayerPosition[value].position;
                 Player.gameObject.transform.rotation = PlayerPosition[value].rotation;
-            } }
+                if (value == 0)
+                {
+                    ObjectiveCollectCrystals.gameObject.SetActive(true);
+                    GrabMoveProvider.SetActive(true);
+                    MoveProvider.SetActive(false);
+                    ClimbProvider.SetActive(false);
+                }
+                else if (value == 1)
+                {
+                    ObjectiveCollectCrystals.gameObject.SetActive(false);
+                    GrabMoveProvider.SetActive(false);
+                    MoveProvider.SetActive(true);
+                    ClimbProvider.SetActive(true);
+                }
+            }
+        }
 
         public bool GameIsEnding { get; private set; }
 
@@ -49,10 +72,11 @@ namespace Unity.FPS.Game
 
         void Awake()
         {
-            EventManager.AddListener<AllObjectivesCompletedEvent>(OnAllObjectivesCompleted);
+            //EventManager.AddListener<AllObjectivesCompletedEvent>(OnAllObjectivesCompleted);
             EventManager.AddListener<PlayerDeathEvent>(OnPlayerDeath);
+            EventManager.AddListener<ObjectiveUpdateEvent>(OnObjectiveCompleted);
             gameTime = 0;
-            CurrentStage = 0;
+            CurrentStage = 1;
         }
 
         void Start()
@@ -78,7 +102,13 @@ namespace Unity.FPS.Game
             }
             gameTime += Time.deltaTime;
         }
-
+        void OnObjectiveCompleted(ObjectiveUpdateEvent evt) {
+            if (!evt.IsComplete) { return; }
+            if (ObjectiveCollectCrystals == evt.Objective)
+            {
+                CurrentStage = 1;
+            }
+        }
         void OnAllObjectivesCompleted(AllObjectivesCompletedEvent evt) => EndGame(true);
         void OnPlayerDeath(PlayerDeathEvent evt) => EndGame(false);
 
@@ -125,8 +155,9 @@ namespace Unity.FPS.Game
 
         void OnDestroy()
         {
-            EventManager.RemoveListener<AllObjectivesCompletedEvent>(OnAllObjectivesCompleted);
+            //EventManager.RemoveListener<AllObjectivesCompletedEvent>(OnAllObjectivesCompleted);
             EventManager.RemoveListener<PlayerDeathEvent>(OnPlayerDeath);
+            EventManager.RemoveListener<ObjectiveUpdateEvent>(OnObjectiveCompleted);
         }
     }
 }

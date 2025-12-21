@@ -1,23 +1,29 @@
 using UnityEngine;
 
-public class CrystalController : MonoBehaviour
+namespace Unity.FPS.Game
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class CrystalController : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        GameFlowManager m_gameFlowManager;
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
         {
-            Destroy(gameObject);
+            m_gameFlowManager = FindAnyObjectByType<GameFlowManager>();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                CrystallCollectEvent evt = Events.CrystallCollectEvent;
+                EventManager.Broadcast(evt);
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -258,7 +258,7 @@ namespace Unity.FPS.Gameplay
                         // handle snapping to the ground
                         if (hit.distance > m_Controller.skinWidth)
                         {
-                            m_Controller.Move(Vector3.down * hit.distance);
+                            //m_Controller.Move(Vector3.down * hit.distance);
                         }
                     }
                 }

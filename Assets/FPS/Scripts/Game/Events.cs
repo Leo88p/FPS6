@@ -16,6 +16,7 @@ namespace Unity.FPS.Game
         public static AmmoPickupEvent AmmoPickupEvent = new AmmoPickupEvent();
         public static DamageEvent DamageEvent = new DamageEvent();
         public static DisplayMessageEvent DisplayMessageEvent = new DisplayMessageEvent();
+        public static CrystallCollectEvent CrystallCollectEvent = new CrystallCollectEvent();
     }
 
     public class ObjectiveUpdateEvent : GameEvent
@@ -40,6 +41,11 @@ namespace Unity.FPS.Game
     {
         public GameObject Enemy;
         public int RemainingEnemyCount;
+    }
+    public class CrystallCollectEvent: GameEvent
+    {
+        public GameObject Crystal;
+        public int ReaminingCrystallCount;
     }
 
     public class PickupEvent : GameEvent

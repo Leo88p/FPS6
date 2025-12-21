@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 694420790615394833}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: UniversalController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 4802751992552345441}
   - component: {fileID: 5961502162797706921}
   - component: {fileID: 8217006049070479745}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ThumbStick_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 3811552066715821903}
   - component: {fileID: 1887524027116762966}
   - component: {fileID: 6028038320232958617}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Controller_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4917782838448717432}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AimPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 1151199814434394120}
   - component: {fileID: 1172909501865361278}
   - component: {fileID: 3464675832356363268}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bumper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 825220459589154871}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GunRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,13 +374,13 @@ GameObject:
   - component: {fileID: 4031873177981160325}
   - component: {fileID: 4904161046162328031}
   - component: {fileID: 8754083541743002132}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Near-Far Interactor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1936324454964691353
 Transform:
   m_ObjectHideFlags: 0
@@ -752,7 +752,7 @@ GameObject:
   - component: {fileID: 2225486910712267856}
   - component: {fileID: 6394127165751096679}
   - component: {fileID: 8299523547690993108}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LeftController
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -803,7 +803,7 @@ MonoBehaviour:
   m_UIScroll: {fileID: 2464016903823916871, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   m_SmoothMotionEnabled: 1
-  m_SmoothTurnEnabled: 0
+  m_SmoothTurnEnabled: 1
   m_NearFarEnableTeleportDuringNearInteraction: 1
   m_UIScrollingEnabled: 1
   m_RayInteractorChanged:
@@ -851,7 +851,7 @@ MonoBehaviour:
     m_Reference: {fileID: 8248158260566104461, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   m_TrackingStateInput:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Tracking State
       m_Type: 0
@@ -861,7 +861,8 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: 684395432459739428, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
   m_PositionAction:
     m_Name: 
     m_Type: 0
@@ -891,7 +892,7 @@ GameObject:
   - component: {fileID: 532522818777477284}
   - component: {fileID: 1901686316216539704}
   - component: {fileID: 6695191700674686618}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Button_Home
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -977,7 +978,7 @@ GameObject:
   - component: {fileID: 3388979191716877645}
   - component: {fileID: 691777370054248276}
   - component: {fileID: 5744473700709801202}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Button_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1061,7 +1062,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8206571611707817869}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: XRController_Thumbstick_Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1099,7 +1100,7 @@ GameObject:
   - component: {fileID: 7025238705803065424}
   - component: {fileID: 9168515019085856981}
   - component: {fileID: 163033523481060898}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LineVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1485,7 +1486,7 @@ GameObject:
   - component: {fileID: 1235871759040939780}
   - component: {fileID: 5276030365845417682}
   - component: {fileID: 967878879045455599}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1569,7 +1570,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6867164317952318004}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WeaponMesh_Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1602,7 +1603,7 @@ GameObject:
   - component: {fileID: 2950823421547018710}
   - component: {fileID: 1641785721069628839}
   - component: {fileID: 8202653783184141795}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Button_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1688,7 +1689,7 @@ GameObject:
   - component: {fileID: 1172277315823691899}
   - component: {fileID: 5597745833131303023}
   - component: {fileID: 2319897330436751540}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TouchPad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1772,7 +1773,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8334323006752503713}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GunMuzzle
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
@@ -1805,7 +1806,7 @@ GameObject:
   - component: {fileID: 9130044653309975717}
   - component: {fileID: 5622877102712037195}
   - component: {fileID: 4140544896947428010}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ThumbStick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
