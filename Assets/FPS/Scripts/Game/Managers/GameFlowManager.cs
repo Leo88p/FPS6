@@ -40,7 +40,10 @@ namespace Unity.FPS.Game
         public GameObject MoveProvider;
         public GameObject ClimbProvider;
         public Objective ObjectiveCollectCrystals;
+        public Objective ObjectiveReachPoint;
+        public Objective ObjectiveKillEnemies;
         private int currentStage;
+        public static int StartingStage = 0;
         public int CurrentStage {
             get { return currentStage; }
             set {
@@ -50,6 +53,8 @@ namespace Unity.FPS.Game
                 if (value == 0)
                 {
                     ObjectiveCollectCrystals.gameObject.SetActive(true);
+                    ObjectiveReachPoint.gameObject.SetActive(false);
+                    ObjectiveKillEnemies.gameObject.SetActive(false);
                     GrabMoveProvider.SetActive(true);
                     MoveProvider.SetActive(false);
                     ClimbProvider.SetActive(false);
@@ -57,9 +62,20 @@ namespace Unity.FPS.Game
                 else if (value == 1)
                 {
                     ObjectiveCollectCrystals.gameObject.SetActive(false);
+                    ObjectiveReachPoint.gameObject.SetActive(true);
+                    ObjectiveKillEnemies.gameObject.SetActive(false);
                     GrabMoveProvider.SetActive(false);
                     MoveProvider.SetActive(true);
                     ClimbProvider.SetActive(true);
+                }
+                else if (value == 2)
+                {
+                    ObjectiveCollectCrystals.gameObject.SetActive(false);
+                    ObjectiveReachPoint.gameObject.SetActive(false);
+                    ObjectiveKillEnemies.gameObject.SetActive(true);
+                    GrabMoveProvider.SetActive(false);
+                    MoveProvider.SetActive(true);
+                    ClimbProvider.SetActive(false);
                 }
             }
         }
@@ -76,7 +92,7 @@ namespace Unity.FPS.Game
             EventManager.AddListener<PlayerDeathEvent>(OnPlayerDeath);
             EventManager.AddListener<ObjectiveUpdateEvent>(OnObjectiveCompleted);
             gameTime = 0;
-            CurrentStage = 1;
+            CurrentStage = StartingStage;
         }
 
         void Start()
@@ -107,6 +123,14 @@ namespace Unity.FPS.Game
             if (ObjectiveCollectCrystals == evt.Objective)
             {
                 CurrentStage = 1;
+            }
+            else if (ObjectiveReachPoint == evt.Objective)
+            {
+                CurrentStage = 2; 
+            }
+            else if (ObjectiveKillEnemies == evt.Objective)
+            {
+                EndGame(true);
             }
         }
         void OnAllObjectivesCompleted(AllObjectivesCompletedEvent evt) => EndGame(true);

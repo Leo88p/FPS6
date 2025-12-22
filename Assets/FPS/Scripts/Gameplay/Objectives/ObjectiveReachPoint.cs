@@ -27,7 +27,7 @@ namespace Unity.FPS.Gameplay
                 CompleteObjective(string.Empty, string.Empty, "Objective complete : " + Title);
 
                 // destroy the transform, will remove the compass marker if it has one
-                Destroy(DestroyRoot.gameObject);
+                //Destroy(DestroyRoot.gameObject);
             }
         }
     }

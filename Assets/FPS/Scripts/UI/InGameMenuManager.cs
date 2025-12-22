@@ -29,6 +29,7 @@ namespace Unity.FPS.UI
 
         [Tooltip("GameObject for the controls")]
         public GameObject ControlImage;
+        public GameObject GameHUD;
 
         PlayerInputHandler m_PlayerInputsHandler;
         Health m_PlayerHealth;
@@ -38,6 +39,7 @@ namespace Unity.FPS.UI
         private InputAction m_CancelAction;
         private InputAction m_NavigateAction;
         private InputAction m_MenuAction;
+        private InputAction m_MainCanvasAction;
 
         void Start()
         {
@@ -69,11 +71,13 @@ namespace Unity.FPS.UI
             m_CancelAction = InputSystem.actions.FindAction("UI/Cancel");
             m_NavigateAction = InputSystem.actions.FindAction("UI/Navigate");
             m_MenuAction = InputSystem.actions.FindAction("UI/Menu");
-            
+            m_MainCanvasAction = InputSystem.actions.FindAction("UI/MainCanvas");
+
             m_SubmitAction.Enable();
             m_CancelAction.Enable();
             m_NavigateAction.Enable();
             m_MenuAction.Enable();
+            m_MainCanvasAction.Enable();
         }
 
         void Update()
@@ -102,6 +106,10 @@ namespace Unity.FPS.UI
 
                 SetPauseMenuActivation(!MenuRoot.activeSelf);
 
+            }
+            if (m_MainCanvasAction.WasPressedThisFrame())
+            {
+                GameHUD.SetActive(!GameHUD.activeSelf);
             }
 
             if (m_NavigateAction.ReadValue<Vector2>().y != 0)
