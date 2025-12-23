@@ -43,7 +43,8 @@ namespace Unity.FPS.Game
         public Objective ObjectiveReachPoint;
         public Objective ObjectiveKillEnemies;
         private int currentStage;
-        public static int StartingStage = 2;
+        public static int StartingStage = 0;
+        public bool TransferingToNewStage = false;
         public int CurrentStage {
             get { return currentStage; }
             set {
@@ -102,18 +103,28 @@ namespace Unity.FPS.Game
 
         void Update()
         {
-            if (GameIsEnding)
+            if (GameIsEnding || TransferingToNewStage)
             {
-                float timeRatio = 1 - (m_TimeLoadEndGameScene - Time.time) / EndSceneLoadDelay;
+                float timeRatio = 1 - (m_TimeLoadEndGameScene - Time.deltaTime) / EndSceneLoadDelay;
+                m_TimeLoadEndGameScene -= Time.deltaTime;
                 EndGameFadeCanvasGroup.alpha = timeRatio;
 
                 AudioUtility.SetMasterVolume(1 - timeRatio);
 
                 // See if it's time to load the end scene (after the delay)
-                if (Time.time >= m_TimeLoadEndGameScene)
+                if (m_TimeLoadEndGameScene <= 0f)
                 {
-                    SceneManager.LoadScene(m_SceneToLoad);
-                    GameIsEnding = false;
+                    if (GameIsEnding)
+                    {
+                        SceneManager.LoadScene(m_SceneToLoad);
+                        GameIsEnding = false;
+                    }
+                    else if (TransferingToNewStage)
+                    {
+                        EndGameFadeCanvasGroup.gameObject.SetActive(false);
+                        TransferingToNewStage = false;
+                        CurrentStage++;
+                    }
                 }
             }
             gameTime += Time.deltaTime;
@@ -122,11 +133,15 @@ namespace Unity.FPS.Game
             if (!evt.IsComplete) { return; }
             if (ObjectiveCollectCrystals == evt.Objective)
             {
-                CurrentStage = 1;
+                TransferingToNewStage = true;
+                EndGameFadeCanvasGroup.gameObject.SetActive(true);
+                m_TimeLoadEndGameScene = EndSceneLoadDelay;
             }
             else if (ObjectiveReachPoint == evt.Objective)
             {
-                CurrentStage = 2; 
+                TransferingToNewStage = true;
+                EndGameFadeCanvasGroup.gameObject.SetActive(true);
+                m_TimeLoadEndGameScene = EndSceneLoadDelay;
             }
             else if (ObjectiveKillEnemies == evt.Objective)
             {
