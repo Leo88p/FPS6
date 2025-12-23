@@ -33,7 +33,6 @@ namespace Unity.FPS.UI
 
         PlayerInputHandler m_PlayerInputsHandler;
         Health m_PlayerHealth;
-        FramerateCounter m_FramerateCounter;
         
         private InputAction m_SubmitAction;
         private InputAction m_CancelAction;
@@ -50,9 +49,6 @@ namespace Unity.FPS.UI
             m_PlayerHealth = m_PlayerInputsHandler.GetComponent<Health>();
             DebugUtility.HandleErrorIfNullGetComponent<Health, InGameMenuManager>(m_PlayerHealth, this, gameObject);
 
-            m_FramerateCounter = FindFirstObjectByType<FramerateCounter>();
-            DebugUtility.HandleErrorIfNullFindObject<FramerateCounter, InGameMenuManager>(m_FramerateCounter, this);
-
             MenuRoot.SetActive(false);
 
             LookSensitivitySlider.value = m_PlayerInputsHandler.LookSensitivity;
@@ -63,9 +59,6 @@ namespace Unity.FPS.UI
 
             InvincibilityToggle.isOn = m_PlayerHealth.Invincible;
             InvincibilityToggle.onValueChanged.AddListener(OnInvincibilityChanged);
-
-            FramerateToggle.isOn = m_FramerateCounter.UIText.gameObject.activeSelf;
-            FramerateToggle.onValueChanged.AddListener(OnFramerateCounterChanged);
 
             m_SubmitAction = InputSystem.actions.FindAction("UI/Submit");
             m_CancelAction = InputSystem.actions.FindAction("UI/Cancel");
@@ -163,11 +156,6 @@ namespace Unity.FPS.UI
         void OnInvincibilityChanged(bool newValue)
         {
             m_PlayerHealth.Invincible = newValue;
-        }
-
-        void OnFramerateCounterChanged(bool newValue)
-        {
-            m_FramerateCounter.UIText.gameObject.SetActive(newValue);
         }
 
         public void OnShowControlButtonClicked(bool show)

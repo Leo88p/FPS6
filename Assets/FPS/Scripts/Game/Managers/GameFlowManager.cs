@@ -43,7 +43,7 @@ namespace Unity.FPS.Game
         public Objective ObjectiveReachPoint;
         public Objective ObjectiveKillEnemies;
         private int currentStage;
-        public static int StartingStage = 0;
+        public static int StartingStage = 2;
         public int CurrentStage {
             get { return currentStage; }
             set {
